@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LanguageFeatures.Models
 {
@@ -14,11 +15,11 @@ namespace LanguageFeatures.Models
             return total;
         }
 
-        public static IEnumerable<Product> FilterByPrice(this IEnumerable<Product> productEnum, decimal minimumPrice)
+        public static IEnumerable<Product> Filter(this IEnumerable<Product> productEnum, Func<Product, bool> selector)
         {
-            foreach (Product prod in productEnum)
+            foreach(Product prod in productEnum)
             {
-                if((prod?.Price ?? 0) >= minimumPrice)
+                if (selector(prod))
                 {
                     yield return prod;
                 }
